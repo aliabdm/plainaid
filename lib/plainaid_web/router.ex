@@ -14,20 +14,9 @@ defmodule PlainaidWeb.Router do
     plug :accepts, ["json"]
   end
 
-scope "/", PlainaidWeb do
-  pipe_through :browser
-  live "/simplify_text", SimplifierLive.Index
-end
+  scope "/", PlainaidWeb do
+    pipe_through :browser
 
-
-  if Application.compile_env(:plainaid, :dev_routes) do
-    import Phoenix.LiveDashboard.Router
-
-    scope "/dev" do
-      pipe_through :browser
-
-      live_dashboard "/dashboard", metrics: PlainaidWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
+    live "/", SimplifierLive.Index
   end
 end
