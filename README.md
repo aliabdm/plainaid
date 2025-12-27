@@ -8,7 +8,7 @@
 
 PlainAid is a real-time web application that simplifies formal documents and structures clear text into actionable insights. Built with Elixir and Phoenix LiveView, it provides instant analysis of complex legal, governmental, and formal communications—with complete privacy.
 
-🔗 **Live Demo:** [https://yourapp.onrender.com](https://yourapp.onrender.com)
+🔗 **Live Demo:** [https://plainaid.onrender.com/](https://plainaid.onrender.com/)
 
 ---
 
