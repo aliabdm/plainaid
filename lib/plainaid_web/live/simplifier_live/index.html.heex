@@ -1,0 +1,80 @@
+<div class="max-w-4xl mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-4">Text Simplifier</h1>
+  <p class="text-gray-600 mb-6">Paste your text below to simplify it instantly.</p>
+
+  <.form for={@form} id="simplifier-form" phx-change="validate" phx-submit="save" class="space-y-4">
+    <.input
+      field={@form[:content]}
+      type="textarea"
+      label="Enter Text"
+      class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+    />
+
+    <div class="flex gap-3">
+      <.button phx-disable-with="Simplifying..." variant="primary" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+        Simplify
+      </.button>
+      <.button type="reset" class="bg-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300">
+        Clear
+      </.button>
+    </div>
+  </.form>
+
+<%= if @result do %>
+  <div class="mt-8 space-y-6">
+    <!-- Summary -->
+    <div class="p-4 bg-blue-50 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-2 text-blue-900">📋 Simple Summary</h2>
+      <p class="text-gray-800 whitespace-pre-wrap"><%= @result["summary"] %></p>
+    </div>
+    
+    <!-- Required Actions -->
+    <%= if @result["required_actions"] && length(@result["required_actions"]) > 0 do %>
+      <div class="p-4 bg-red-50 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-2 text-red-900">⚠️ What You Must Do</h2>
+        <ul class="mt-2 space-y-1 list-disc list-inside text-gray-800">
+          <%= for action <- @result["required_actions"] do %>
+            <li><%= action %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <!-- Deadlines -->
+    <%= if @result["deadlines"] && length(@result["deadlines"]) > 0 do %>
+      <div class="p-4 bg-yellow-50 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-2 text-yellow-900">⏰ Important Deadlines</h2>
+        <ul class="mt-2 space-y-1 list-disc list-inside text-gray-800">
+          <%= for deadline <- @result["deadlines"] do %>
+            <li><%= deadline %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <!-- Risks -->
+    <%= if @result["risks"] && length(@result["risks"]) > 0 do %>
+      <div class="p-4 bg-orange-50 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-2 text-orange-900">🚨 Risks if You Don't Act</h2>
+        <ul class="mt-2 space-y-1 list-disc list-inside text-gray-800">
+          <%= for risk <- @result["risks"] do %>
+            <li><%= risk %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <!-- Optional -->
+    <%= if @result["optional"] && length(@result["optional"]) > 0 do %>
+      <div class="p-4 bg-green-50 rounded-lg shadow">
+        <h2 class="text-xl font-semibold mb-2 text-green-900">✓ Optional (Not Required)</h2>
+        <ul class="mt-2 space-y-1 list-disc list-inside text-gray-800">
+          <%= for opt <- @result["optional"] do %>
+            <li><%= opt %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+</div>
