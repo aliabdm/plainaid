@@ -91,16 +91,63 @@ defmodule PlainaidWeb.SimplifierLive.Index do
           </button>
         </form>
 
-        <%= if @result do %>
-          <div class="mt-10 space-y-6">
-          <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
-            <h3 class="font-semibold text-indigo-800 mb-2">📋 Summary</h3>
-            <p class="text-slate-800 leading-relaxed">
-              <%= @result["summary"] %>
-            </p>
-          </div>
-          </div>
-        <% end %>
+<%= if @result do %>
+  <div class="mt-10 space-y-6">
+
+    <!-- SUMMARY -->
+    <div class="bg-indigo-50 p-6 rounded-xl border border-indigo-100">
+      <h3 class="font-semibold text-indigo-800 mb-2">📋 Summary</h3>
+      <p class="text-slate-800 leading-relaxed">
+        <%= @result["summary"] %>
+      </p>
+    </div>
+
+    <%= if @result["required_actions"] && @result["required_actions"] != [] do %>
+      <div class="bg-rose-50 p-6 rounded-xl border border-rose-100">
+        <h3 class="font-semibold text-rose-800 mb-2">⚠️ Required Actions</h3>
+        <ul class="space-y-2">
+          <%= for action <- @result["required_actions"] do %>
+            <li class="text-slate-800">• <%= action %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= if @result["deadlines"] && @result["deadlines"] != [] do %>
+      <div class="bg-amber-50 p-6 rounded-xl border border-amber-100">
+        <h3 class="font-semibold text-amber-800 mb-2">⏰ Deadlines</h3>
+        <ul class="space-y-2">
+          <%= for d <- @result["deadlines"] do %>
+            <li class="text-slate-800">• <%= d %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= if @result["risks"] && @result["risks"] != [] do %>
+      <div class="bg-orange-50 p-6 rounded-xl border border-orange-100">
+        <h3 class="font-semibold text-orange-800 mb-2">🚨 Risks</h3>
+        <ul class="space-y-2">
+          <%= for r <- @result["risks"] do %>
+            <li class="text-slate-800">• <%= r %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= if @result["optional"] && @result["optional"] != [] do %>
+      <div class="bg-emerald-50 p-6 rounded-xl border border-emerald-100">
+        <h3 class="font-semibold text-emerald-800 mb-2">✓ Optional</h3>
+        <ul class="space-y-2">
+          <%= for o <- @result["optional"] do %>
+            <li class="text-slate-800">• <%= o %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  </div>
+<% end %>
       </div>
 
       <!-- FOOTER (SELF-CONTAINED STYLE) -->
